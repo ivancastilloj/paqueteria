@@ -1,6 +1,12 @@
 package com.basico;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,16 +55,48 @@ public class Login extends HttpServlet {
 	        String usu, pass;
 	        usu = request.getParameter("user");
 	        pass = request.getParameter("password");
-	        //deberíamos buscar el usuario en la base de datos, pero dado que se escapa de este tema, ponemos un ejemplo en el mismo código
-	        if(usu.equals("admin") && pass.equals("admin") && sesion.getAttribute("usuario") == null){
-	            //si coincide usuario y password y además no hay sesión iniciada
-	            sesion.setAttribute("usuario", usu);
-	            //redirijo a página con información de login exitoso
-	            response.sendRedirect("llevar.jsp");
-	        }else{
-	            //lógica para login inválido
-	        }
+	        
+	      
+
+	        //Get Connection
+	        
+			
+			  try {
+				  Class.forName("com.mysql.jdbc.Driver");
+				  Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/viernes","root","");
+		
+	       
+	         
+	          PreparedStatement Statement = con.prepareStatement("select * from transportistas Where nombre='" + usu +"' and password='" +pass+"'");;
+	          
+	          ResultSet rs = Statement.executeQuery();
+	          String nombre;
+	          String password;
+	          while(rs.next()) {
+	         		
+	         		nombre =(String) request.getSession().getAttribute(rs.getString("nombre"));
+	         		password =(String)	request.getSession().getAttribute(rs.getString("password"));
+	         		
+	         		if(usu.equals(rs.getString("nombre")) && pass.equals(rs.getString("password")) && sesion.getAttribute("usuario") == null){
+			            //si coincide usuario y password y además no hay sesión iniciada
+			            sesion.setAttribute("usuario", usu);
+			            //redirijo a página con información de login exitoso
+			            response.sendRedirect("llevar.jsp");
+			        }else{
+			            //lógica para login inválido
+			        }
+		       
+	         		
+	         		}           
+	                con.close();
+	      			} catch (SQLException | ClassNotFoundException e) {
+	      				// TODO Auto-generated catch block
+	      				e.printStackTrace();
+	      			}
+	          
+			  
 	    }
 	}
+
 
 

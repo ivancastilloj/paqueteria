@@ -3,32 +3,29 @@ package com.basico;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.Scope;
 
 /**
- * Servlet implementation class llevar
+ * Servlet implementation class pujar
  */
-@WebServlet("/llevar")
-public class llevar extends HttpServlet {
+@WebServlet("/pujar")
+public class pujar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public llevar() {
+    public pujar() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,6 +35,7 @@ public class llevar extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -45,18 +43,13 @@ public class llevar extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 String origen = request.getParameter("entrega");
-	        String destino = request.getParameter("destino");
-	        String paquete = request.getParameter("paquete");
-	        System.out.println(origen);
-	        System.out.println(destino);
-	        String fecha="2015-05-15";
-//	        String startDateStr = request.getParameter("fecha");
-//	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	        //surround below line with try catch block as below code throws checked exception
-	       // Date fecha = sdf.parse(startDateStr);
-			
-				
+		 String nombre = request.getParameter("nombre");
+	        String password = request.getParameter("password");
+	        HttpSession sesion = request.getSession();
+	        int puja= (Integer) sesion.getAttribute("puja");
+	       
+	        System.out.println(puja);
+	       
 			
 	        
 			
@@ -65,7 +58,7 @@ public class llevar extends HttpServlet {
 				  Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/viernes","root","");
 		
 				
-				String sql="insert into enviar (origen,destino,paquete,fecha) values('" + origen + "','"  + destino + "','"  + paquete + "','"  + fecha + "')";
+				String sql="insert into transportistas (nombre,password,puja) values('" + nombre + "','"  + password + "','"  +puja + "')";
 	         
 				  Statement stat = con.createStatement();// enviar comandos SQL a la base de datos, se usa la clase Statement de java
 		          
@@ -75,6 +68,7 @@ public class llevar extends HttpServlet {
 
 		           stat.close();
 		           con.close();
+		           sesion.setAttribute("usuario", nombre);
 		           response.sendRedirect("subida.jsp");  
 		           
 				} catch (ClassNotFoundException | SQLException e) {
@@ -83,8 +77,5 @@ public class llevar extends HttpServlet {
 				}
 			  
 		   }
+
 }
-		
-		
-		
-	

@@ -44,7 +44,7 @@ public class AuthenticationFilter implements Filter {
 			return;
 		}
 		
-		res.sendRedirect("/sesiones/llevar.jsp");
+		res.sendRedirect("/projectviernes/llevar.jsp");
 	}
 
 	
