@@ -60,6 +60,7 @@
     </style>
   </head>
   <body>
+  Bienvenido ${sessionScope.usuario}
   <form action="llevar" method="post">
     <input id="origin-input" class="controls" type="text"
         placeholder="Enter an origin location" name="entrega">

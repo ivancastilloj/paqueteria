@@ -10,7 +10,7 @@
 <h1>Bienvenido a TE LO LLEVO</h1>
 <a href="entregar.jsp">
 <input type="button" value="Entregar un paquete"></a> 
-<a href="llevar.jsp">
+<a href="login.jsp">
 <input type="button" value="LLevar un paquete"></a> 
 
 </body>

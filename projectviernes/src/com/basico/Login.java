@@ -29,11 +29,11 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 //me llega la url "proyecto/login/out"
-        String action=(request.getPathInfo()!=null?request.getPathInfo():"");
+        String action=(request.getPathInfo()!=null?request.getPathInfo():"/out");
         HttpSession sesion = request.getSession();
         if(action.equals("/out")){
             sesion.invalidate();
-            response.sendRedirect("/home.jsp");
+            response.sendRedirect("login.jsp");
         }else{
            
         }
@@ -54,7 +54,7 @@ public class Login extends HttpServlet {
 	            //si coincide usuario y password y además no hay sesión iniciada
 	            sesion.setAttribute("usuario", usu);
 	            //redirijo a página con información de login exitoso
-	            response.sendRedirect("loginExito.jsp");
+	            response.sendRedirect("llevar.jsp");
 	        }else{
 	            //lógica para login inválido
 	        }
