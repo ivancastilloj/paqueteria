@@ -54,9 +54,9 @@
     <input id="destination-input" class="form-control" type="text"
         placeholder="Introduce el destino" name="destino">
         
-        <select name="paquete" class="form-control"><option value="s">Pequeño</option>
-        <option value="m">Mediano</option>
-        <option value="l">Grande</option>
+        <select name="paquete" class="form-control"><option value="Pequeño">Pequeño</option>
+        <option value="Mediano">Mediano</option>
+        <option value="Grande">Grande</option>
         
         
         </select>
