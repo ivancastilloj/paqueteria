@@ -6,6 +6,7 @@ public class usuario {
 	String destino;
 	String nombre;
 	String puja;
+	
 	public String getOrigen() { 
 		return origen;
 	}
