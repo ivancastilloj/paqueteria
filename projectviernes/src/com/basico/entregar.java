@@ -86,7 +86,7 @@ public class entregar extends HttpServlet {
 			 String fechaDate = rs.getString("fecha");
 				SimpleDateFormat formato= new SimpleDateFormat("yyyy-MM-dd");
 				java.util.Date date = null;
-				try {
+				try { 
 					date = formato.parse(fechaDate);
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
