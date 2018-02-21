@@ -58,6 +58,8 @@
         placeholder="Introduzca el destino" name="destino">
     
 <input type="submit" value="Buscar" class="form-control">
+   
+   
     <div id="map"></div>
     
 </form>

@@ -16,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -55,10 +57,11 @@ public class entregar extends HttpServlet {
 		   //Get parameters
         String origen = request.getParameter("entrega");
         String destino = request.getParameter("destino");
-       
+       String no="No existe";
         HttpSession session = request.getSession(false);
         session.setAttribute("origen", origen);
         session.setAttribute("destino", destino);
+        
         //Get Connection
         
         List<pedido> listaEnvios = new ArrayList<pedido>();
@@ -79,8 +82,29 @@ public class entregar extends HttpServlet {
 			pedido.setOrigen(rs.getString("origen"));
 			pedido.setDestino(rs.getString("destino"));
 			pedido.setTamano(rs.getString("paquete"));
-			pedido.setFecha(rs.getString("fecha"));
+			
+			 String fechaDate = rs.getString("fecha");
+				SimpleDateFormat formato= new SimpleDateFormat("yyyy-MM-dd");
+				java.util.Date date = null;
+				try {
+					date = formato.parse(fechaDate);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				java.sql.Date fecha = new java.sql.Date(date.getTime());
+			
+			pedido.setFecha(fecha);
+			
+if (pedido.getOrigen().equals(null)) {
+	session.setAttribute("no", no);
+				
+			}
 			listaEnvios.add(pedido);
+			
+			
    		
    		}           
       	rs.close();

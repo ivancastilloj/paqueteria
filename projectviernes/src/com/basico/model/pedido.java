@@ -1,11 +1,15 @@
 package com.basico.model;
 
+import java.sql.Date;
+
 public class pedido {
 	
 	String origen;
 	String destino; 
 	String tamano;
-	String fecha;
+	Date fecha;
+	
+	
 	public String getOrigen() {
 		return origen;
 	}
@@ -24,10 +28,10 @@ public class pedido {
 	public void setTamano(String tamano) {
 		this.tamano = tamano;
 	}
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 	
