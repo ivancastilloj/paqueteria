@@ -1,9 +1,9 @@
 package com.basico.model;
 
 public class pedido {
-
+	
 	String origen;
-	String destino;
+	String destino; 
 	String tamano;
 	String fecha;
 	public String getOrigen() {
@@ -30,13 +30,8 @@ public class pedido {
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-	public pedido(String origen, String destino, String tamano, String fecha) {
-		super();
-		this.origen = origen;
-		this.destino = destino;
-		this.tamano = tamano;
-		this.fecha = fecha;
-	}
+	
+
 	
 	
 }

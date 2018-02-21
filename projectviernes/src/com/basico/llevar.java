@@ -48,15 +48,19 @@ public class llevar extends HttpServlet {
 		 String origen = request.getParameter("entrega");
 	        String destino = request.getParameter("destino");
 	        String paquete = request.getParameter("paquete");
-	        System.out.println(origen);
-	        System.out.println(destino);
-	        String fecha="2015-05-15";
-//	        String startDateStr = request.getParameter("fecha");
-//	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	        //surround below line with try catch block as below code throws checked exception
-	       // Date fecha = sdf.parse(startDateStr);
+	        
+	        String fechaDate = request.getParameter("fecha");
+			SimpleDateFormat formato= new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date = null;
+			try {
+				date = formato.parse(fechaDate);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
-				
+			
+			java.sql.Date fecha = new java.sql.Date(date.getTime());
 			
 	        
 			

@@ -47,8 +47,13 @@ public class pujar extends HttpServlet {
 	        String password = request.getParameter("password");
 	        HttpSession sesion = request.getSession();
 	        int puja= (Integer) sesion.getAttribute("puja");
-	       
-	        System.out.println(puja);
+	    String origen= (String) sesion.getAttribute("origen");
+	    String destino= (String) sesion.getAttribute("destino");
+	    System.out.println("as");
+	        System.out.println("Estaes la"+puja);
+	        System.out.println("Estaes la"+origen);
+	        System.out.println("Estaes la"+destino);
+	        System.out.println("Estaes la"+nombre);
 	       
 			
 	        
@@ -65,6 +70,7 @@ public class pujar extends HttpServlet {
 		          
 		           stat.executeUpdate(sql);
 		           
+		          
 
 		           stat.close();
 		           con.close();
@@ -72,6 +78,22 @@ public class pujar extends HttpServlet {
 		           response.sendRedirect("subida.jsp");  
 		           
 				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			  
+			  try {
+				
+				  Class.forName("com.mysql.jdbc.Driver");
+				  Connection conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/viernes","root","");
+		
+			String  sq="insert into viajes (nombre,origen,destino,puja) values('" + nombre + "','"  + origen + "','" + destino +"','"  +puja + "')";
+		         
+			Statement stats = conn.createStatement();// enviar comandos SQL a la base de datos, se usa la clase Statement de java
+			          
+			          
+			           stats.executeUpdate(sq);
+			  } catch (ClassNotFoundException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

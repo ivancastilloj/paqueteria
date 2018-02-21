@@ -1,12 +1,14 @@
 package com.basico;
-
+import com.basico.model.pedido;
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +16,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -50,12 +55,13 @@ public class entregar extends HttpServlet {
 		   //Get parameters
         String origen = request.getParameter("entrega");
         String destino = request.getParameter("destino");
-        System.out.println(origen);
-        System.out.println(destino);
-
+       
+        HttpSession session = request.getSession(false);
+        session.setAttribute("origen", origen);
+        session.setAttribute("destino", destino);
         //Get Connection
         
-		
+        List<pedido> listaEnvios = new ArrayList<pedido>();
 		  try {
 			  Class.forName("com.mysql.jdbc.Driver");
 			  Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/viernes","root","");
@@ -67,22 +73,27 @@ public class entregar extends HttpServlet {
           ResultSet rs = Statement.executeQuery();
          
       	while(rs.next()) {
-   		System.out.println("origen: "+rs.getString("origen"));
-   		System.out.println("destino: "+rs.getString("destino"));
-   		System.out.println("paquete:"+rs.getString("paquete"));
-   		System.out.println("fecha: "+rs.getDate("fecha"));
-   		request.getSession().setAttribute("origen", rs.getString("origen"));
-   		request.getSession().setAttribute("destino", rs.getString("destino"));
-   		request.getSession().setAttribute("paquete", rs.getString("paquete"));
-   		request.getSession().setAttribute("fecha", rs.getDate("fecha"));
-   	
+      		
+      		pedido pedido = new pedido();
+		
+			pedido.setOrigen(rs.getString("origen"));
+			pedido.setDestino(rs.getString("destino"));
+			pedido.setTamano(rs.getString("paquete"));
+			pedido.setFecha(rs.getString("fecha"));
+			listaEnvios.add(pedido);
+   		
    		}           
-          con.close();
+      	rs.close();
+      	Statement.close();
+		con.close();
 			} catch (SQLException | ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		  response.sendRedirect("table.jsp");  
+		  request.setAttribute("listaEnvios", listaEnvios);
+			
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/table.jsp");
+			rd.forward(request, response);
 	}
 }
 	

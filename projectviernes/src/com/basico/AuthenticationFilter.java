@@ -44,13 +44,12 @@ public class AuthenticationFilter implements Filter {
 			return;
 		}
 		
-		res.sendRedirect("/projectviernes/llevar.jsp");
+		res.sendRedirect("/projectviernes/llevar.jsp"); 
 	}
 
-	
-
+	@Override
 	public void destroy() {
-		//close any resources here
+		// TODO Auto-generated method stub
+		
 	}
-
 }

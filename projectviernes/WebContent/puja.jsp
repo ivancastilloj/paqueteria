@@ -9,7 +9,7 @@
 <body>
 <form action="pujar" method="post">
    Introduzca su nick de transportista <input type="text" name="nombre">
-    Introduzca su contraseña (password) <input type="text" name="password">
+    Introduzca su contraseña (password) <input type="password" name="password">
  Ha pujado en  ${sessionScope.puja} euros.
  
    <input type="submit" value="Registrar">
